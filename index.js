@@ -16,10 +16,13 @@ const port = process.env.PORT || 8081;
 const makeMeme = async ({
     //the text to put on the image
     url,
-    input
+    fname,
+    lname
   }) => {
     //if there's no image to work with
     //don't try anything
+    
+    const input = fname + ' ' + lname;
     const canvas = createCanvas(200, 200);
     const context = canvas.getContext("2d");
   
@@ -78,12 +81,15 @@ app.get("/campaigns/:input/:job/:name", async (req, res) => {
 	const input = req?.params?.input
 	const job = req?.params?.job
 	const name = req?.params?.name
+	
+	const fname = req?.query?.mm_firstName
+	const lname = req?.query?mm_lastName
+	
 	const url="https://quacks.web-mm.com/grabs/"+job+"/"+name;
- 	const finalImage = await makeMeme({ url, input })
+ 	const finalImage = await makeMeme({ url, fname, lname })
  	const headers = { "Content-Type": "image/jpg" }
  	res.writeHead(200, headers);
  	res.end(finalImage);
-	
 })
 
 //start the web server listening
