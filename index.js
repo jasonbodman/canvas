@@ -77,7 +77,7 @@ const makeMeme = async ({
     const textWidth = text.width;
   
     //loadImage is a function from node-canvas that loads an image
-    const image = await loadImage(url);
+    const image = await loadImage(http://quacks.web-mm.com/grabs/E408/E408_BLK_app_store_dm.png);
   
     //set the canvas to the same size as the image
     canvas.width = image.width;
