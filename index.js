@@ -126,7 +126,7 @@ app.get("/campaigns/:input", async (req, res) => {
 	const { params } = req;
 	const input = params?.input
 	
-	const imgUrl = 'http://quacks.web-mm.com/grabs/E408/E408_BLK_app_store_dm.png'
+	const imgUrl = 'http://quacks.web-mm.com/grabs/E408_BLK/E408_BLK_app_store_dm.png'
  	const finalImage = await makeMeme({ imgUrl, input })
  	const headers = { "Content-Type": "image/jpg" }
  	res.writeHead(200, headers);
