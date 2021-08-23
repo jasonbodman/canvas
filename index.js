@@ -129,11 +129,12 @@ app.get("/campaigns/:job/:image", async (req, res) => {
 	const image = params?.image
 	
 	const imgUrl = 'http://quacks.web-mm.com/grabs/' + job + '/' + image
+	res.send("url: " + imgUrl)
 	
-	const finalImage = await makeMeme({ imgUrl, 'Hello' })
-	const headers = { "Content-Type": "image/png" }
-	res.writeHead(200, headers);
-	res.end(finalImage);
+// 	const finalImage = await makeMeme({ imgUrl, 'Hello' })
+// 	const headers = { "Content-Type": "image/png" }
+// 	res.writeHead(200, headers);
+// 	res.end(finalImage);
 	
 })
 
