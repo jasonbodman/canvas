@@ -2,50 +2,6 @@
 //loadImage is the function that loads an image
 const { createCanvas, loadImage } = require("canvas");
 
-//accepts an input string
-//returns an image of the input text as a buffer
-const makeTextImage = (input) => {
-  //creates the html canvas object
-  //with a width of 200px
-  //and a height of 200px
-  const canvas = createCanvas(200, 200);
-
-  //a reference to the 2d canvas rendering context
-  //used for drawing shapes, text, and images
-  const context = canvas.getContext("2d");
-
-  //the font we are using
-  const fontSetting = "bold 50px sans-serif";
-
-  //set context to use the fontSetting
-  context.font = fontSetting;
-
-  //context.measureText is a function that measures the text
-  //so we can adjust how wide the finished image is
-  const textWidth = context.measureText(input).width;
-
-  //change the canvas width to be wider than the text width
-  canvas.width = textWidth + 100;
-
-  //changing canvas width resets the canvas, so change the font again
-  context.font = fontSetting;
-
-  //fillStyle sets the color that you are drawing onto the canvas
-  context.fillStyle = "white";
-
-  //fillText draws text onto the canvas
-  context.fillText(input, 50, 50, textWidth + 50);
-
-  //set the color to black for the outline
-  context.fillStyle = "black";
-
-  //strokeText draws an outline of text on the canvas
-  context.strokeText(input, 50, 50, textWidth + 50);
-
-  //return a buffer (binary data) instead of the image itself
-  return canvas.toBuffer();
-};
-
 //get the express library
 const express = require("express");
 
@@ -112,7 +68,75 @@ const makeMeme = async ({
     //return the buffer
     return canvas.toBuffer();
   };
-  
+
+//accepts an input string
+//returns an image of the input text as a buffer
+const makeTextImage = (input) => {
+  //creates the html canvas object
+  //with a width of 200px
+  //and a height of 200px
+  const canvas = createCanvas(200, 200);
+
+  //a reference to the 2d canvas rendering context
+  //used for drawing shapes, text, and images
+  const context = canvas.getContext("2d");
+
+  //the font we are using
+  const fontSetting = "bold 50px sans-serif";
+
+  //set context to use the fontSetting
+  context.font = fontSetting;
+
+  //context.measureText is a function that measures the text
+  //so we can adjust how wide the finished image is
+  const textWidth = context.measureText(input).width;
+
+  //change the canvas width to be wider than the text width
+  canvas.width = textWidth + 100;
+
+  //changing canvas width resets the canvas, so change the font again
+  context.font = fontSetting;
+
+  //fillStyle sets the color that you are drawing onto the canvas
+  context.fillStyle = "white";
+
+  //fillText draws text onto the canvas
+  context.fillText(input, 50, 50, textWidth + 50);
+
+  //set the color to black for the outline
+  context.fillStyle = "black";
+
+  //strokeText draws an outline of text on the canvas
+  context.strokeText(input, 50, 50, textWidth + 50);
+
+  //return a buffer (binary data) instead of the image itself
+  return canvas.toBuffer();
+};
+
+
+//ROUTES
+//this is a 'route'
+//it defines the response to an http 'get' request
+app.get("/", (req, res) =>
+  //this response will display text in the browser
+  res.send("You have reached Shifty Images")
+);
+
+
+app.get("/campaigns/:job/:image", async (req, res) => {
+	const { params } = req;
+	const job = params?.job
+	const image = params?.image
+	
+	const imgUrl = 'http://quacks.web-mm.com/grabs/' + job + '/' + image
+	
+	const finalImage = await makeMeme({ imgUrl, 'Hello' })
+	const headers = { "Content-Type": "image/png" }
+	res.writeHead(200, headers);
+	res.end(finalImage);
+	
+})
+
 //this route has two parameters
 //input is a string
 //url* matches everything after input
@@ -175,12 +199,6 @@ app.get("/text/:input", (req, res) => {
     res.end(image);
   });
   
-//this is a 'route'
-//it defines the response to an http 'get' request
-app.get("/", (req, res) =>
-  //this response will display text in the browser
-  res.send("You have reached the Meme Maker")
-);
 
 //start the web server listening
 app.listen(port, () => {
