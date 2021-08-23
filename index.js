@@ -86,7 +86,7 @@ app.get("/campaigns/:job/:name", async (req, res) => {
 	
 	const url="https://quacks.web-mm.com/grabs/"+job+"/"+name;
  	const finalImage = await makeMeme({ url, fname, lname })
- 	const headers = { "Content-Type": "image/jpg" }
+ 	const headers = { "Content-Type": "image/png" }
  	res.writeHead(200, headers);
  	res.end(finalImage);
 })
