@@ -15,11 +15,11 @@ const port = process.env.PORT || 8081;
 
 const makeMeme = async ({
     //the text to put on the image
-    input
+    url
   }) => {
     //if there's no image to work with
     //don't try anything
-  
+		const input = "JaSoN"
     const canvas = createCanvas(200, 200);
     const context = canvas.getContext("2d");
   
@@ -30,7 +30,7 @@ const makeMeme = async ({
     const textWidth = text.width;
   
     //loadImage is a function from node-canvas that loads an image
-    const image = await loadImage('https://quacks.web-mm.com/grabs/E408_BLK/E408_BLK_app_store_dm.png');
+    const image = await loadImage(url);
   
     //set the canvas to the same size as the image
     canvas.width = image.width;
@@ -119,11 +119,10 @@ app.get("/", (req, res) =>
   res.send("You have reached Shifty Images")
 );
 
-app.get("/campaigns/:input", async (req, res) => {
-	const { params } = req;
-	const input = params?.input
+app.get("/campaigns", async (req, res) => {
 	
- 	const finalImage = await makeMeme({ input })
+	const url="https://quacks.web-mm.com/grabs/E408_BLK/E408_BLK_app_store_dm.png"
+ 	const finalImage = await makeMeme({ url })
  	const headers = { "Content-Type": "image/jpg" }
  	res.writeHead(200, headers);
  	res.end(finalImage);
