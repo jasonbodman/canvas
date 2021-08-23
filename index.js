@@ -14,14 +14,11 @@ const app = express();
 const port = process.env.PORT || 8081;
 
 const makeMeme = async ({
-    //the url of the image to put the text on
-    url,
     //the text to put on the image
-    input,
+    input
   }) => {
     //if there's no image to work with
     //don't try anything
-    if (!url) return undefined;
   
     const canvas = createCanvas(200, 200);
     const context = canvas.getContext("2d");
@@ -33,7 +30,7 @@ const makeMeme = async ({
     const textWidth = text.width;
   
     //loadImage is a function from node-canvas that loads an image
-    const image = await loadImage(url);
+    const image = await loadImage('https://quacks.web-mm.com/grabs/E408_BLK/E408_BLK_app_store_dm.png');
   
     //set the canvas to the same size as the image
     canvas.width = image.width;
@@ -126,8 +123,7 @@ app.get("/campaigns/:input", async (req, res) => {
 	const { params } = req;
 	const input = params?.input
 	
-	const imgUrl = 'http://quacks.web-mm.com/grabs/E408_BLK/E408_BLK_app_store_dm.png'
- 	const finalImage = await makeMeme({ imgUrl, input })
+ 	const finalImage = await makeMeme({ input })
  	const headers = { "Content-Type": "image/jpg" }
  	res.writeHead(200, headers);
  	res.end(finalImage);
