@@ -15,11 +15,11 @@ const port = process.env.PORT || 8081;
 
 const makeMeme = async ({
     //the text to put on the image
-    url
+    url,
+    input
   }) => {
     //if there's no image to work with
     //don't try anything
-		const input = "it works!"
     const canvas = createCanvas(200, 200);
     const context = canvas.getContext("2d");
   
@@ -74,11 +74,12 @@ app.get("/", (req, res) =>
   res.send("You have reached Shifty Images")
 );
 
-app.get("/campaigns/:job/:name", async (req, res) => {
+app.get("/campaigns/:input/:job/:name", async (req, res) => {
+	const input = req?.params?.input
 	const job = req?.params?.job
 	const name = req?.params?.name
 	const url="https://quacks.web-mm.com/grabs/"+job+"/"+name;
- 	const finalImage = await makeMeme({ url })
+ 	const finalImage = await makeMeme({ url, input })
  	const headers = { "Content-Type": "image/jpg" }
  	res.writeHead(200, headers);
  	res.end(finalImage);
