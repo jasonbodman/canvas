@@ -13,20 +13,45 @@ const app = express();
 //and if PORT is undefined, use 8081
 const port = process.env.PORT || 8081;
 
+const imgText = function(input) {
+	const fname;
+	const lname;
+	const fullname
+	if ( !fname || !lname ) {
+		fullname = 'Valued Customer1'
+		return fullname
+	} else {
+		fullname = fname + ' ' lname
+		if (fullname.length <=20) {
+			fullname = 'Valued Customer2'
+			return fullname
+		} else {
+			return fullname
+		}
+	}
+}
+
 const makeMeme = async ({
     //the text to put on the image
-    url
+    url,
+    input
   }) => {
     //if there's no image to work with
     //don't try anything
-		const input = "it works!"
+    const name
+		if (!input) {
+			name = 'No Name'
+		} else {
+			name = imgText(input)
+		}
+		
     const canvas = createCanvas(200, 200);
     const context = canvas.getContext("2d");
   
     const fontSetting = "bold 50px sans-serif";
     context.font = fontSetting;
   
-    const text = context.measureText(input);
+    const text = context.measureText(name);
     const textWidth = text.width;
   
     //loadImage is a function from node-canvas that loads an image
@@ -55,12 +80,12 @@ const makeMeme = async ({
     //draw the text in white
     //x uses the value we calculated to center the text
     //y is 30 pixels above the bottom of the image
-    context.fillText(input, center, bottom);
+    context.fillText(name, center, bottom);
   
     //set the color to black
     context.fillStyle = "black";
     //draw the outline in black
-    context.strokeText(input, center, bottom);
+    context.strokeText(name, center, bottom);
   
     //return the buffer
     return canvas.toBuffer();
