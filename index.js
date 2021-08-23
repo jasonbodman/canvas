@@ -13,46 +13,20 @@ const app = express();
 //and if PORT is undefined, use 8081
 const port = process.env.PORT || 8081;
 
-const imgText = function(f, l) {
-	const fname;
-	const lname;
-	const fullname
-	if ( !f || !l ) {
-		fullname = 'Valued Customer1'
-		return fullname
-	} else {
-		fullname = fname + ' ' lname
-		if (fullname.length <=20) {
-			fullname = 'Valued Customer2'
-			return fullname
-		} else {
-			return fullname
-		}
-	}
-}
-
 const makeMeme = async ({
     //the text to put on the image
-    url,
-    fname,
-    lname,
+    url
   }) => {
     //if there's no image to work with
     //don't try anything
-    const name
-		if (!fname || !lname) {
-			name = 'No Name'
-		} else {
-			name = imgText(fname, lname)
-		}
-		
+		const input = "it works!"
     const canvas = createCanvas(200, 200);
     const context = canvas.getContext("2d");
   
     const fontSetting = "bold 50px sans-serif";
     context.font = fontSetting;
   
-    const text = context.measureText(name);
+    const text = context.measureText(input);
     const textWidth = text.width;
   
     //loadImage is a function from node-canvas that loads an image
@@ -81,12 +55,12 @@ const makeMeme = async ({
     //draw the text in white
     //x uses the value we calculated to center the text
     //y is 30 pixels above the bottom of the image
-    context.fillText(name, center, bottom);
+    context.fillText(input, center, bottom);
   
     //set the color to black
     context.fillStyle = "black";
     //draw the outline in black
-    context.strokeText(name, center, bottom);
+    context.strokeText(input, center, bottom);
   
     //return the buffer
     return canvas.toBuffer();
@@ -103,10 +77,6 @@ app.get("/", (req, res) =>
 app.get("/campaigns/:job/:name", async (req, res) => {
 	const job = req?.params?.job
 	const name = req?.params?.name
-	
-	const fname = req?.params?.mm_firstName
-	const lname = req?.params?.mm_lastName
-	
 	const url="https://quacks.web-mm.com/grabs/"+job+"/"+name;
  	const finalImage = await makeMeme({ url })
  	const headers = { "Content-Type": "image/jpg" }
