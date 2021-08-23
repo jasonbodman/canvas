@@ -19,7 +19,7 @@ const makeMeme = async ({
   }) => {
     //if there's no image to work with
     //don't try anything
-		const input = "JaSoN"
+		const input = "it works!"
     const canvas = createCanvas(200, 200);
     const context = canvas.getContext("2d");
   
