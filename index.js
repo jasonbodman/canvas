@@ -13,6 +13,18 @@ const app = express();
 //and if PORT is undefined, use 8081
 const port = process.env.PORT || 8081;
 
+function setText(f, l) {
+	var full;
+	if (f == undefined || l == undefined) {
+		full = "Valued Customer1"
+	} else {
+		full = f + ' ' + l
+		if (full.length >= 20) {
+			full = "Valued Customer2"
+		}
+	}
+}
+
 const makeMeme = async ({
     //the text to put on the image
     url,
@@ -22,7 +34,7 @@ const makeMeme = async ({
     //if there's no image to work with
     //don't try anything
     
-    const input = fname + ' ' + lname;
+    const input = setText(fname, lname);
     const canvas = createCanvas(200, 200);
     const context = canvas.getContext("2d");
   
