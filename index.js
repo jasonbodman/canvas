@@ -119,9 +119,10 @@ app.get("/", (req, res) =>
   res.send("You have reached Shifty Images")
 );
 
-app.get("/campaigns", async (req, res) => {
-	
-	const url="https://quacks.web-mm.com/grabs/E408_BLK/E408_BLK_app_store_dm.png"
+app.get("/campaigns/:job/:name", async (req, res) => {
+	const job = req?.params?.job
+	const name = req?.params?.name
+	const url="https://quacks.web-mm.com/grabs/"+job+"/"+name;
  	const finalImage = await makeMeme({ url })
  	const headers = { "Content-Type": "image/jpg" }
  	res.writeHead(200, headers);
