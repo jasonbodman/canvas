@@ -13,11 +13,11 @@ const app = express();
 //and if PORT is undefined, use 8081
 const port = process.env.PORT || 8081;
 
-const imgText = function(input) {
+const imgText = function(f, l) {
 	const fname;
 	const lname;
 	const fullname
-	if ( !fname || !lname ) {
+	if ( !f || !l ) {
 		fullname = 'Valued Customer1'
 		return fullname
 	} else {
@@ -34,15 +34,16 @@ const imgText = function(input) {
 const makeMeme = async ({
     //the text to put on the image
     url,
-    input
+    fname,
+    lname,
   }) => {
     //if there's no image to work with
     //don't try anything
     const name
-		if (!input) {
+		if (!fname || !lname) {
 			name = 'No Name'
 		} else {
-			name = imgText(input)
+			name = imgText(fname, lname)
 		}
 		
     const canvas = createCanvas(200, 200);
@@ -102,6 +103,10 @@ app.get("/", (req, res) =>
 app.get("/campaigns/:job/:name", async (req, res) => {
 	const job = req?.params?.job
 	const name = req?.params?.name
+	
+	const fname = req?.params?.mm_firstName
+	const lname = req?.params?.mm_lastName
+	
 	const url="https://quacks.web-mm.com/grabs/"+job+"/"+name;
  	const finalImage = await makeMeme({ url })
  	const headers = { "Content-Type": "image/jpg" }
