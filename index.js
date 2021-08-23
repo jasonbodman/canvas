@@ -122,14 +122,11 @@ app.get("/", (req, res) =>
   res.send("You have reached Shifty Images")
 );
 
-
-app.get("/campaigns/:job/:input/:image", async (req, res) => {
+app.get("/campaigns/:input", async (req, res) => {
 	const { params } = req;
-	const job = params?.job
-	const image = params?.image
 	const input = params?.input
 	
-	const imgUrl = 'http://quacks.web-mm.com/grabs/' + job + '/' + image
+	const imgUrl = 'http://quacks.web-mm.com/grabs/E408/E408_BLK_app_store_dm.png'
  	const finalImage = await makeMeme({ imgUrl, input })
  	const headers = { "Content-Type": "image/jpg" }
  	res.writeHead(200, headers);
