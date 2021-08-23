@@ -123,7 +123,7 @@ app.get("/", (req, res) =>
 );
 
 
-app.get("/campaigns/:job/:image/:input", async (req, res) => {
+app.get("/campaigns/:job/:input/:image", async (req, res) => {
 	const { params } = req;
 	const job = params?.job
 	const image = params?.image
