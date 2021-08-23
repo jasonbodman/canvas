@@ -15,7 +15,7 @@ const makeTextImage = (input) => {
   const context = canvas.getContext("2d");
 
   //the font we are using
-  const fontSetting = "bold 50px Impact";
+  const fontSetting = "bold 50px sans-serif";
 
   //set context to use the fontSetting
   context.font = fontSetting;
@@ -70,7 +70,7 @@ const makeMeme = async ({
     const canvas = createCanvas(200, 200);
     const context = canvas.getContext("2d");
   
-    const fontSetting = "bold 50px Impact";
+    const fontSetting = "bold 50px sans-serif";
     context.font = fontSetting;
   
     const text = context.measureText(input);
