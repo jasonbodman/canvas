@@ -77,13 +77,12 @@ app.get("/", (req, res) =>
   res.send("You have reached Shifty Images")
 );
 
-app.get("/campaigns/:input/:job/:name", async (req, res) => {
-	const input = req?.params?.input
+app.get("/campaigns/:job/:name", async (req, res) => {
 	const job = req?.params?.job
 	const name = req?.params?.name
 	
-	const fname = req?.query?.mm_firstName
-	const lname = req?.query?mm_lastName
+	const fname = req.query.mm_firstName
+	const lname = req.query.mm_lastName
 	
 	const url="https://quacks.web-mm.com/grabs/"+job+"/"+name;
  	const finalImage = await makeMeme({ url, fname, lname })
